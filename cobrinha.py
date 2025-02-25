@@ -7,6 +7,17 @@ BLOCK = 10
 POS_INICIAL_X = WINDOWS_WIDTH / 2
 POS_INICIAL_Y = WINDOWS_HEIGHT / 2
 
+def verifica_margens(pos):
+    if 0 <= pos[0] < WINDOWS_WIDTH and 0 <= pos[1] < WINDOWS_HEIGHT:
+        return False
+    else:
+        return True
+
+
+def game_over():
+    pygame.quit()
+    quit()
+
 pygame.init()
 
 window = pygame.display.set_mode((WINDOWS_WIDTH, WINDOWS_HEIGHT))
@@ -31,6 +42,9 @@ while True:
 
     for pos in cobra_pos:
         window.blit(cobra_surface, pos)
+
+    if verifica_margens(cobra_pos[0]):
+        game_over()
 
     if direcao == K_RIGHT:
         cobra_pos[0] = cobra_pos[0][0] + BLOCK, cobra_pos[0][1] #Movimenta para direira
