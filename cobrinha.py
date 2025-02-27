@@ -1,6 +1,8 @@
 import pygame
 from pygame.locals import *
 
+import random
+
 WINDOWS_WIDTH = 600
 WINDOWS_HEIGHT = 600
 BLOCK = 10
@@ -13,6 +15,11 @@ def verifica_margens(pos):
     else:
         return True
 
+def gera_pos_aleatoria():
+    x = random.randint(0, WINDOWS_WIDTH)
+    y = random.randint(0, WINDOWS_HEIGHT)
+
+    return x // BLOCK * BLOCK, y // BLOCK * BLOCK
 
 def game_over():
     pygame.quit()
@@ -27,6 +34,10 @@ cobra_surface = pygame.Surface((BLOCK, BLOCK))
 cobra_surface.fill((53,59,72))
 direcao = K_LEFT
 
+maca_surface = pygame.Surface((BLOCK, BLOCK))
+maca_surface.fill((255, 0, 0))
+maca_pos = gera_pos_aleatoria()
+
 while True:
     pygame.time.Clock().tick(10)
     window.fill((68, 189, 50))
@@ -40,6 +51,7 @@ while True:
             if evento.key in [K_UP, K_DOWN, K_LEFT, K_RIGHT]:
                 direcao = evento.key
 
+    window.blit(maca_surface, maca_pos)
     for pos in cobra_pos:
         window.blit(cobra_surface, pos)
 
