@@ -9,6 +9,9 @@ BLOCK = 10
 POS_INICIAL_X = WINDOWS_WIDTH / 2
 POS_INICIAL_Y = WINDOWS_HEIGHT / 2
 
+def colisao(pos1, pos2):
+    return pos1 == pos2
+
 def verifica_margens(pos):
     if 0 <= pos[0] < WINDOWS_WIDTH and 0 <= pos[1] < WINDOWS_HEIGHT:
         return False
@@ -29,7 +32,7 @@ pygame.init()
 
 window = pygame.display.set_mode((WINDOWS_WIDTH, WINDOWS_HEIGHT))
 
-cobra_pos = [((POS_INICIAL_X, POS_INICIAL_Y))]
+cobra_pos = [((POS_INICIAL_X, POS_INICIAL_Y)), (POS_INICIAL_X + BLOCK, POS_INICIAL_Y), (POS_INICIAL_X + 2 * BLOCK, POS_INICIAL_Y)]
 cobra_surface = pygame.Surface((BLOCK, BLOCK))
 cobra_surface.fill((53,59,72))
 direcao = K_LEFT
@@ -52,8 +55,16 @@ while True:
                 direcao = evento.key
 
     window.blit(maca_surface, maca_pos)
+
+    if (colisao(cobra_pos[0], maca_pos)):
+        cobra_pos.append((-10,-10))
+        maca_pos = gera_pos_aleatoria()
+
     for pos in cobra_pos:
         window.blit(cobra_surface, pos)
+    
+    for item in range(len(cobra_pos)-1,0,-1):
+        cobra_pos[item] = cobra_pos[item-1]
 
     if verifica_margens(cobra_pos[0]):
         game_over()
