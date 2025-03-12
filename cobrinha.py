@@ -3,6 +3,8 @@ from pygame.locals import *
 
 import random
 
+import time
+
 WINDOWS_WIDTH = 600
 WINDOWS_HEIGHT = 600
 BLOCK = 10
@@ -35,6 +37,12 @@ def gera_pos_aleatoria():
     return x // BLOCK * BLOCK, y // BLOCK * BLOCK
 
 def game_over():
+    fonte = pygame.font.SysFont('arial', 50, True, True)
+    gameOver = 'GAME OVER'
+    text_over = fonte.render(gameOver, True, (255, 255, 255))
+    window.blit(text_over, (140, 210))
+    pygame.display.update()
+    time.sleep(5)
     pygame.quit()
     quit()
 
