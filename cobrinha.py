@@ -9,6 +9,9 @@ BLOCK = 10
 POS_INICIAL_X = WINDOWS_WIDTH / 2
 POS_INICIAL_Y = WINDOWS_HEIGHT / 2
 
+pontos = 0
+velocidade = 10
+
 def colisao(pos1, pos2):
     return pos1 == pos2
 
@@ -49,7 +52,7 @@ maca_surface.fill((255, 0, 0))
 maca_pos = gera_pos_aleatoria()
 
 while True:
-    pygame.time.Clock().tick(10)
+    pygame.time.Clock().tick(velocidade)
     window.fill((68, 189, 50))
 
     for evento in pygame.event.get():
@@ -76,6 +79,10 @@ while True:
         cobra_pos.append((-10,-10))
         maca_pos = gera_pos_aleatoria()
         obstaculo_pos.append(gera_pos_aleatoria())
+        pontos += 1
+        if pontos %5 == 0:
+            velocidade +=2
+
 
     for pos in obstaculo_pos:
         if colisao(cobra_pos[0], pos):
