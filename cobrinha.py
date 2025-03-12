@@ -12,6 +12,10 @@ POS_INICIAL_Y = WINDOWS_HEIGHT / 2
 pontos = 0
 velocidade = 10
 
+pygame.font.init()
+fonte = pygame.font.SysFont('arial', 35, True, True) #negrito e italico
+
+
 def colisao(pos1, pos2):
     return pos1 == pos2
 
@@ -37,6 +41,7 @@ def game_over():
 pygame.init()
 
 window = pygame.display.set_mode((WINDOWS_WIDTH, WINDOWS_HEIGHT))
+pygame.display.set_caption('Jogo da Cobrinha')
 
 cobra_pos = [((POS_INICIAL_X, POS_INICIAL_Y)), (POS_INICIAL_X + BLOCK, POS_INICIAL_Y), (POS_INICIAL_X + 2 * BLOCK, POS_INICIAL_Y)]
 cobra_surface = pygame.Surface((BLOCK, BLOCK))
@@ -54,6 +59,9 @@ maca_pos = gera_pos_aleatoria()
 while True:
     pygame.time.Clock().tick(velocidade)
     window.fill((68, 189, 50))
+
+    mensagem = f'Pontos: {pontos}'
+    texto = fonte.render(mensagem, True, (255,255,255))
 
     for evento in pygame.event.get():
         if evento.type == QUIT:
@@ -109,4 +117,5 @@ while True:
     elif direcao == K_DOWN:
         cobra_pos[0] = cobra_pos[0][0], cobra_pos[0][1] + BLOCK #Movimento para baixo
 
+    window.blit(texto, (430,20))
     pygame.display.update()
